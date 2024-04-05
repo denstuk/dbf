@@ -1,7 +1,12 @@
 import * as path from 'node:path';
 
 export const config = {
-    schemaPath: path.join(__dirname, '../../schema.json'),
+    paths: {
+        root: path.join(__dirname, '../../'),
+        defaultSchema: path.join(__dirname, '../../schema.json'),
+        postgresVolume: path.join(__dirname, '../../docker/volumes/postgres'),
+    },
+    container: 'dbf-database',
     database: {
         user: 'admin',
         pass: 'admin',

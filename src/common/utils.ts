@@ -1,18 +1,20 @@
-import * as fs from 'node:fs';
-import { Exception } from './errors';
+type Fn<T> = () => T;
+type AsyncFn<T> = () => Promise<T>;
 
-export const readJSON = async <T>(path: string): Promise<T> => {
-    try {
-        const buffer = await fs.promises.readFile(path);
-        return JSON.parse(buffer.toString('utf8'));
-    } catch (error: unknown) {
-        throw new Exception(`Unable to read JSON file: ${path}`);
+export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const retry = async <T>(fn: Fn<T> | AsyncFn<T>, times: number, delay: number): Promise<T> => {
+    let lastError: Error = new Error();
+
+    for (let i = 0; i < times; i++) {
+        try {
+            return await fn();
+        } catch (error: unknown) {
+            lastError = error as Error;
+            sleep(delay);
+        }
     }
+
+    throw lastError;
 };
 
-export const recreateFolder = async (path: string): Promise<void> => {
-    if (fs.existsSync(path)) {
-        await fs.promises.rmdir(path, { recursive: true });
-    }
-    await fs.promises.mkdir(path);
-};

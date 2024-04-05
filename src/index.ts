@@ -1,20 +1,28 @@
 import { cli } from './cli';
-import { schemaCommand } from './command/schema';
 import { logger } from './common/logger';
+import * as commands from './commands';
 
 process.on('uncaughtException', (error: unknown) => {
     logger.error(error);
 });
 
 const main = async (): Promise<void> => {
-    const argv = cli.parse();
+    const argv = await cli.parse();
 
-    logger.success(JSON.stringify(argv));
+    if (argv._.includes('plant')) {
+        await commands.plant();
+        return;
+    }
 
-    // await schemaCommand();
+    if (argv._.includes('nuke')) {
+        await commands.nuke();
+        return;
+    }
+
+    throw new Error('No command specified');
 };
 
-main().catch((error) => {
-    logger.error(error);
+main().catch((error: unknown) => {
+    logger.error((error as Error).stack);
     process.exitCode = 1;
 });

@@ -1,5 +1,5 @@
 module.exports = {
-    "printWidth": 180,
+    "printWidth": 150,
     "quoteProps": "consistent",
     "vueIndentScriptAndStyle": true,
     "semi": true,
