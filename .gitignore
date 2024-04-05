@@ -1,0 +1,7 @@
+node_modules
+bin
+.env
+schema.json
+tmp
+.vscode
+volumes
