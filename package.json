@@ -1,13 +1,17 @@
 {
-  "name": "dbf",
-  "version": "0.0.1",
-  "description": "DB Farmer",
+  "name": "dbfarm",
+  "version": "0.0.3",
+  "description": "DB Farm",
   "main": "./bin/index.js",
+  "bin": {
+    "dbfarm": "./bin/index.js"
+  },
   "scripts": {
     "build": "rm -rf ./bin && tsc -p ./tsconfig.json",
     "start": "node ./bin/index.js",
     "start:docker": "cd docker && docker-compose up --build --force-recreate",
-    "lint:eslint": "eslint . --fix"
+    "lint:eslint": "eslint . --fix",
+    "make": "npm run build && npm install -g ."
   },
   "author": "Denis Stuk <denstuk@outlook.com>",
   "license": "MIT",

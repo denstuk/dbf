@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { cli } from './cli';
 import { logger } from './common/logger';
 import * as commands from './commands';

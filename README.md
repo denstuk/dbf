@@ -8,4 +8,4 @@
 
 ## Description
 
-DBFarmer is a command-line tool that scans your schema file and populates your database with realistic fake data, making it easy to test and develop your applications without worrying about manual data entry
+DBFarm is a command-line tool that scans your schema file and populates your database with realistic fake data, making it easy to test and develop your applications without worrying about manual data entry
