@@ -1,6 +1,6 @@
 {
   "name": "dbfarm",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "DB Farm",
   "license": "MIT",
   "author": "Denis Stuk <denstuk@outlook.com>",
@@ -19,7 +19,9 @@
     "lint:eslint": "eslint .",
     "make": "npm run build && npm install -g ."
   },
-
+  "files": [
+    "./bin/"
+  ],
   "dependencies": {
     "@databases/pg": "^5.5.0",
     "@faker-js/faker": "^8.4.1",
@@ -39,6 +41,7 @@
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.1.3",
+    "prettier": "^3.2.5",
     "typescript": "^5.4.4",
     "typescript-eslint": "^7.5.0"
   }
