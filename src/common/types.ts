@@ -1,4 +1,4 @@
-export type DBValue = string | number | boolean | null;
+export type DBValue = boolean | number | string | null;
 
 export enum DBSetter {
     SQL = 'SQL',
@@ -27,34 +27,14 @@ export enum DBSetter {
     COMPANY_NAME = 'COMPANY_NAME',
 }
 
-export type DBCommonAttributeSchema = {
+export interface DBCommonAttributeSchema {
     readonly name: string;
     readonly sql: string;
-};
+}
 
 export type DBSimpleAttributeSchema = DBCommonAttributeSchema & {
     readonly setter:
-        DBSetter.SQL |
-        DBSetter.UUID |
-        DBSetter.PERSON_FIRST_NAME |
-        DBSetter.PERSON_LAST_NAME |
-        DBSetter.PERSON_GENDER |
-        DBSetter.PERSON_JOB_TITLE |
-        DBSetter.PERSON_JOB_AREA |
-        DBSetter.PERSON_SEX |
-        DBSetter.PHONE_NUMBER |
-        DBSetter.INTERNET_EMAIL |
-        DBSetter.INTERNET_IP |
-        DBSetter.INTERNET_MAC |
-        DBSetter.DATE_PAST |
-        DBSetter.DATE_FUTURE |
-        DBSetter.LOCATION_CITY |
-        DBSetter.LOCATION_COUNTRY |
-        DBSetter.LOCATION_LATITUDE |
-        DBSetter.LOCATION_LONGITUDE |
-        DBSetter.VEHICLE_MODEL |
-        DBSetter.VEHICLE_TYPE |
-        DBSetter.COMPANY_NAME
+        DBSetter.COMPANY_NAME | DBSetter.DATE_FUTURE | DBSetter.DATE_PAST | DBSetter.INTERNET_EMAIL | DBSetter.INTERNET_IP | DBSetter.INTERNET_MAC | DBSetter.LOCATION_CITY | DBSetter.LOCATION_COUNTRY | DBSetter.LOCATION_LATITUDE | DBSetter.LOCATION_LONGITUDE | DBSetter.PERSON_FIRST_NAME | DBSetter.PERSON_GENDER | DBSetter.PERSON_JOB_AREA | DBSetter.PERSON_JOB_TITLE | DBSetter.PERSON_LAST_NAME | DBSetter.PERSON_SEX | DBSetter.PHONE_NUMBER | DBSetter.SQL | DBSetter.UUID | DBSetter.VEHICLE_MODEL | DBSetter.VEHICLE_TYPE
 };
 
 export type DBTextAttributeSchema = DBCommonAttributeSchema & {
@@ -65,7 +45,7 @@ export type DBTextAttributeSchema = DBCommonAttributeSchema & {
 
 export type DBNumberAttributeSchema = DBCommonAttributeSchema & {
     readonly setter: DBSetter.NUMBER;
-    readonly type: 'integer' | 'float';
+    readonly type: 'float' | 'integer';
     readonly min?: number;
     readonly max?: number;
     /**
@@ -74,10 +54,10 @@ export type DBNumberAttributeSchema = DBCommonAttributeSchema & {
     readonly repeatable?: boolean;
 };
 
-export type DBAttributeSchema = DBSimpleAttributeSchema | DBTextAttributeSchema | DBNumberAttributeSchema;
+export type DBAttributeSchema = DBNumberAttributeSchema | DBSimpleAttributeSchema | DBTextAttributeSchema;
 
 
-export type DBTableSchema = {
+export interface DBTableSchema {
     readonly name: string;
     readonly attributes: DBAttributeSchema[];
     readonly constraints?: string[];
@@ -85,6 +65,6 @@ export type DBTableSchema = {
      * Number of rows to generate
      */
     readonly amount: number;
-};
+}
 
 export type DBSchema = DBTableSchema[];

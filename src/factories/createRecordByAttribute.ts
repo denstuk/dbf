@@ -1,6 +1,7 @@
-import { faker } from '@faker-js/faker';
-import { DBSetter, type DBAttributeSchema, type DBValue } from '../common/types';
 import * as crypto from 'node:crypto';
+import { faker } from '@faker-js/faker';
+import { DBSetter } from '../common/types';
+import type { DBAttributeSchema, DBValue } from '../common/types';
 
 const createValueBySetter = (attribute: DBAttributeSchema): DBValue => {
     if (attribute.setter === DBSetter.UUID) {

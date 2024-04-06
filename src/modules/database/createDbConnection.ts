@@ -1,7 +1,7 @@
 import { Pool } from 'pg';
 import { config } from '../../common/config';
 
-export const createDbConnection = () => new Pool({
+export const createDbConnection = (): Pool => new Pool({
     user: config.database.user,
     host: config.database.host,
     database: config.database.name,

@@ -1,11 +1,11 @@
-import * as child_process from 'node:child_process';
+import * as cp from 'node:child_process';
 import * as util from 'node:util';
+import * as path from 'node:path';
 import { DockerNotInstalledException, DockerNotRunningException } from '../../common/errors';
 import { config } from '../../common/config';
-import path from 'node:path';
-import { Container } from './types';
+import type { DockerContainer } from './types';
 
-const execAsync = util.promisify(child_process.exec);
+const execAsync = util.promisify(cp.exec);
 
 export const verifyDockerInstalled = async (): Promise<void> => {
     try {
@@ -33,9 +33,9 @@ export const runPostgresContainer = async (): Promise<void> => {
     await execAsync(`docker run ${name} ${user} ${password} ${database} ${volumes} ${port} -d postgres`);
 };
 
-export const getArrayOfRunningContainers = async (): Promise<Container[]> => {
+export const getArrayOfRunningContainers = async (): Promise<DockerContainer[]> => {
     const { stdout } = await execAsync('docker ps --format \'{"id":"{{ .ID }}", "image": "{{ .Image }}", "name":"{{ .Names }}"}\'');
-    return stdout.split('\n').filter((l) => !!l).map((line) => JSON.parse(line) as Container);
+    return stdout.split('\n').filter((l) => !!l).map((line) => JSON.parse(line) as DockerContainer);
 };
 
 export const removeDockerContainer = async (name: string): Promise<void> => {

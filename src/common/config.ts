@@ -6,7 +6,7 @@ export const config = {
         defaultSchema: path.join(__dirname, '../../schema.json'),
         postgresVolume: path.join(__dirname, '../../docker/volumes/postgres'),
     },
-    container: 'dbf-database',
+    container: 'dbfarm-database',
     database: {
         user: 'admin',
         pass: 'admin',

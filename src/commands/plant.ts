@@ -1,9 +1,8 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
 import { createWriteStream } from 'node:fs';
-import { retry, sleep } from '../common/utils';
+import { sleep } from '../common/utils';
 import { config } from '../common/config';
-import { DBSchema } from '../common/types';
 import { LB1, LB2 } from '../common/constants';
 import { createRecordByAttributes } from '../factories/createRecordByAttribute';
 import { createDbConnection } from '../modules/database/createDbConnection';
@@ -11,6 +10,7 @@ import { logger } from '../common/logger';
 import { createInsertTableSQLStatement, createTableSQLStatement, dropTableSQLStatement } from '../factories/sqlFactories';
 import { runPostgresContainer, verifyDockerInstalled, verifyDockerRunning } from '../modules/docker';
 import { readJSON, recreateFolder } from '../modules/fs';
+import type { DBSchema } from '../common/types';
 
 /**
  * Generates database by `schema.json` file
@@ -49,12 +49,12 @@ export const plant = async (): Promise<void> => {
     await insertPromise;
     logger.success('Insert generation: DONE');
 
-
-    await sleep(5000); // TODO:Fix simple workaround to wait docker container start
+    const sleepMs = 5000;
+    await sleep(sleepMs); // TODO:Fix simple workaround to wait docker container start
 
     logger.success('Postgres container creation: DONE');
 
-    const connection = await retry(createDbConnection, 10, 1000);
+    const connection = createDbConnection();
     logger.success('Establishing database connection: DONE');
 
     const file = await fs.readFile(sqlFile); // TODO:Fix bad idea but quite easy to implement
